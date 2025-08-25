@@ -13,10 +13,11 @@ use App\Repository\BookRepository;
 final class BookController extends AbstractController
 {
     #[Route('/books', name: 'BookList', methods: ['GET'])]
-    public function index(): Response
+    public function index(BookRepository $bookRepository): Response
     {
         return $this->render('book/index.html.twig', [
             'controller_name' => 'BookController',
+            
         ]);
     }
 
@@ -35,8 +36,9 @@ final class BookController extends AbstractController
 
         return $this->json( [
             'message' => 'Livro criado com sucesso!',
-            ]
-        , 204);
+            'data' => $book 
+        ],
+        201);
     }
         
 }
