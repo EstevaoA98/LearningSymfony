@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\BookRepository;
+use Doctrine\Persistence\ManagerRegistry;
 
 final class BookController extends AbstractController
 {
@@ -18,6 +19,22 @@ final class BookController extends AbstractController
         return $this->render('book/index.html.twig', [
             'controller_name' => 'BookController',
             
+        ]);
+    }
+
+        #[Route('/books/{book}', name: 'Book', methods: ['GET'])]
+    public function book (int $book, BookRepository $bookRepository): Response
+    {
+        $book = $bookRepository->find($book);
+
+        if (!$book) {
+            return $this->json([
+                'message' => 'Livro não encontrado!'
+            ]);
+        }
+
+        return $this-> json( [
+            'data' => $bookRepository->find($book)
         ]);
     }
 
@@ -36,6 +53,25 @@ final class BookController extends AbstractController
 
         return $this->json( [
             'message' => 'Livro criado com sucesso!',
+            'data' => $book 
+        ],
+        201);
+    }
+
+    #[Route('/books/{book}', name: 'BooksUpdate', methods: ['PUT', 'PATCH'])]
+    public function update(int $book, Request $request, BookRepository $bookRepository, ManagerRegistry $doctrine): JsonResponse
+    {
+        $data = $request->request->all();
+        $book = $bookRepository->find($book);
+
+        $book->setTitle($data['title']);
+        $book->setIsbn($data['isbn']);
+        $book->setUpdatedAt(new \DateTimeImmutable('now', new \DateTimeZone('America/Sao_Paulo')));
+
+        $doctrine->getManager()->flush();
+
+        return $this->json( [
+            'message' => 'Livro atualizado com sucesso!',
             'data' => $book 
         ],
         201);
