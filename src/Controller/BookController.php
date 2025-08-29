@@ -76,6 +76,19 @@ final class BookController extends AbstractController
         ],
         201);
     }
-        
+    
+    #[Route('/books/{book}', name: 'BooksDelete', methods: ['DELETE'])]
+    public function delete(int $book, Request $request, BookRepository $bookRepository): JsonResponse
+    {
+        if($request->headers->get('Content-Type') !== 'application/json'){
+            $data = $request->toArray();
+        } else {
+            $book = $bookRepository->find($book);
+        }
+        return $this->json( [ 
+            '$data' => $bookRepository->remove($book, true),
+            'message' => 'Livro deletado com sucesso!',
+        ]);
+    }
 }
 
