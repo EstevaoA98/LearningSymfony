@@ -80,10 +80,11 @@ final class BookController extends AbstractController
     #[Route('/books/{book}', name: 'BooksDelete', methods: ['DELETE'])]
     public function delete(int $book, Request $request, BookRepository $bookRepository): JsonResponse
     {
-        if($request->headers->get('Content-Type') !== 'application/json'){
-            $data = $request->toArray();
-        } else {
-            $book = $bookRepository->find($book);
+        $book = $bookRepository->find($book);
+        if (!$book) {
+            return $this->json([
+                'message' => 'Livro não encontrado!'
+            ]);
         }
         return $this->json( [ 
             '$data' => $bookRepository->remove($book, true),
