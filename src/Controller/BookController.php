@@ -16,9 +16,11 @@ final class BookController extends AbstractController
     #[Route('/books', name: 'BookList', methods: ['GET'])]
     public function index(BookRepository $bookRepository): Response
     {
-        return $this->render('book/index.html.twig', [
-            'controller_name' => 'BookController',
-            
+
+        $books = $bookRepository->findAll();
+
+        return $this->json([
+            'books' => $books,
         ]);
     }
 
@@ -41,7 +43,11 @@ final class BookController extends AbstractController
     #[Route('/books', name: 'BooksCreate', methods: ['POST'])]
     public function create(Request $request, BookRepository $bookRepository): JsonResponse
     {
-        $data = $request->request->all();
+        if($request->headers->get('Content-Type') == 'application/json'){
+            $data = $request->toArray();
+        } else {
+            $data = $request->request->all();
+        }
 
         $book = new Book();
         $book->setTitle($data['title']);
