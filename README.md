@@ -95,7 +95,7 @@ class Book
 ---
 # 📸 Prints dos Endpoints da API
 
-Abaixo alguns testes realizados no Postman para validar a API:
+Abaixo alguns testes realizados no Insomnia para validar a API:
 
 ---
 
