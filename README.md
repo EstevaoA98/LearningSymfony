@@ -102,38 +102,38 @@ Abaixo alguns testes realizados no Postman para validar a API:
 ###  GET /books
 Lista todos os livros do banco de dados.  
 
-![GET Books](prints/GET_LIST.png)
+![GET Books](/prints/GET_LIST.png)
 
 ---
 
 ###  GET /books/{id}
 Retorna um livro específico pelo **ID**.  
 
-![GET Book ID](prints/GET_ID.png)
+![GET Book ID](/prints/GET_ID.png)
 
 ---
 
 ###  POST /books
 Cria um novo livro enviando os dados no corpo da requisição.  
 
-![POST Book](prints/POST.png)
+![POST Book](/prints/POST.png)
 
 ---
 
 ###  PUT /books/{id}
 Atualiza um livro existente.  
 
-![PUT Book](prints/PUT.png)
+![PUT Book](/prints/PUT.png)
 
 ---
 
 ###  DELETE /books/{id}
 Remove um livro pelo **ID**.  
 
-![DELETE Book](prints/DELETE.png)
+![DELETE Book](/prints/DELETE.png)
 
 Confirmando o delete:
-![DELETE confirmado](prints/confirmandoDELETE.png)
+![DELETE confirmado](/prints/confirmandoDELETE.png)
 
 ---
 ## O que aprendi com este projeto
